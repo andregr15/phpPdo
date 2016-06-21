@@ -2,42 +2,36 @@
 	<head>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <meta charset="utf-8">
-       	<title>CRUD Alunos</title>
+       	<title>CRUD Usuarios</title>
 	</head>
 	
 	<body>
 		<center>
 		<div class="well">
 			<center>
-				<h1>Alterar Aluno</h1>
+				<h1>Alterar Usuario</h1>
 			</center>
 		</div>
 		<?php require_once ("menu.php");?>
 		<div class="panel panel-default">
 			<div class="well">
 			<?php 
-				require_once ("alunoDao.php");
-				$aluno;
+				require_once ("usuarioDao.php");
+				$usuario;
 				$excluido;
 				try
 				{
-					$dao = new alunoDao();
-					$aluno = new Aluno();
+					$dao = new usuarioDao();
+					$usuario = new Usuario();
 					
-					$id = null;
 					$nome = null;
-					
-					
-					if(isset($_POST['id']))
-						$id = $_POST['id'];
 					
 					if(isset($_POST['nome']))
 						$nome = $_POST['nome'];
 					
-					$aluno->SetId($id)
-						  ->SetNome($nome)
-						  ->SetNota(null);
-					
+					$usuario->SetNome($nome)
+						    ->SetPassword(null);
+							
 					$excluido = false;
 					
 					if($_POST)
@@ -53,11 +47,11 @@
 						}
 					}
 					
-					$aluno = $dao->GetAluno($aluno);
+					$usuario = $dao->GetUsuario($usuario);
 					
-					if($aluno == null && $excluido == false)
+					if($usuario == null && $excluido == false)
 					{
-						echo "Aluno nao cadastrado!";
+						echo "Usuario nao cadastrado!";
 					}
 				}
 				catch(\PDOException $e)
@@ -69,16 +63,15 @@
 				{
 				   try
 				   {
-					    $dao = new alunoDao();
-						$al = new Aluno();
-						$al->SetId($_POST['id'])
-							  ->SetNome($_POST['nome'])
-							  ->SetNota($_POST['nota']);
+					    $dao = new usuarioDao();
+						$us = new Usuario();
+						$us->SetNome($_POST['nome'])
+						   ->SetPassword($_POST['password']);
 						
 						
-						if($dao->AtualizarAluno($al))
+						if($dao->AtualizarUsuario($us))
 						{
-							echo "Aluno atualiazado com sucesso!";
+							echo "Usuario atualiazado com sucesso!";
 						}
 						else
 						{
@@ -95,17 +88,16 @@
 				{
 				   try
 				   {
-					    $dao = new alunoDao();
-						$al = new Aluno();
-						$al->SetId($_POST['id'])
-							  ->SetNome(null)
-							  ->SetNota(null);
+					    $dao = new usuarioDao();
+						$us = new Usuario();
+						$us->SetNome($_POST['nome'])
+						   ->SetPassword(null);
 						
 						
-						if($dao->ExcluirAluno($al))
+						if($dao->ExcluirUsuario($us))
 						{
-							echo "Aluno excluido com sucesso!";
-							$aluno = null;
+							echo "Usuario excluido com sucesso!";
+							$usuario = null;
 						}
 						else
 						{
@@ -119,14 +111,12 @@
 				}					
 		    ?>
 			<form action="" method="post">
-			Id:<br>
-			<input type="text" name="id" value="<?php echo $aluno == null ? "" : $aluno->id;?>" readonly /><br>
 			
 			Nome:<br>
-			<input type="text" name="nome"  value="<?php echo $aluno == null ? "" :$aluno->nome;?>"/><br>
+			<input type="text" name="nome"  value="<?php echo $usuario == null ? "" :$usuario->nome;?>" readonly /><br>
 			
-			Nota:<br>
-			<input type="text" name="nota" value="<?php echo $aluno == null ? "" :$aluno->nota;?>"/><br>
+			Senha:<br>
+			<input type="text" name="password" value="<?php echo $usuario == null ? "" :$usuario->senha;?>"/><br>
 			
 			<input type="submit" name="salvar" value="Salvar" />
 			<input type="submit" name="excluir" value="Excluir"/>

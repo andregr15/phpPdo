@@ -2,14 +2,14 @@
 	<head>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <meta charset="utf-8">
-       	<title>CRUD Alunos</title>
+       	<title>CRUD Usuarios</title>
 	</head>
 	
 	<body>
 		<center>
 		<div class="well">
 			<center>
-				<h1>Listagem de todos os alunos</h1>
+				<h1>Listagem de todos os usuarios</h1>
 			</center>
 		</div>
 		<?php require_once ("menu.php");?>
@@ -17,21 +17,19 @@
 			<div class="well">
 				<table style="width:70%">
 				  <tr>
-					<td><b>Id</b></td>
 					<td><b>Nome</b></td> 
-					<td><b>Nota</b></td>
 				  </tr>
 				  <?php 
-					require_once ("alunoDao.php");
+					require_once ("usuarioDao.php");
 					
 					try
 					{
-						$dao = new alunoDao();
-						$alunos = $dao->GetAlunos();
+						$dao = new usuarioDao();
+						$usuarios = $dao->GetUsuarios();
 						
-						foreach($alunos as $aluno)
+						foreach($usuarios as $usuario)
 						{
-							echo "<tr><td>".$aluno->id."</td><td>".$aluno->nome."</td><td>".$aluno->nota."</td></tr>";
+							echo "<tr><td>".$usuario->nome."</td></tr>";
 						}
 					}
 					catch(\PDOException $e)
@@ -41,7 +39,8 @@
 							  
 				  ?>
 				</table>
-				<form method="post" action="alterarAluno.php">
+				<br>
+				<form method="post" action="alterarUsuario.php">
 					Nome:<br> 
 					<input type="text" name="nome"/><br>
 					<input type="submit" value="Pesquisar"/>

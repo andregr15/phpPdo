@@ -28,3 +28,14 @@ insert into pdo.aluno (nome, nota) values ('Vitória', '5');
 insert into pdo.aluno (nome, nota) values ('Lucas', '7');
 insert into pdo.aluno (nome, nota) values ('Mateus', '10');
 insert into pdo.aluno (nome, nota) values ('Fernanda', '0');
+
+create table pdo.usuario
+(
+	nome varchar(255) primary key,
+	senha varchar(10)
+);
+
+insert into pdo.usuario (nome, senha) values ("admin", 'admin');
+insert into pdo.usuario (nome, senha) values ("Andre", '1234');
+insert into pdo.usuario (nome, senha) values ("Gabriel", '4321');
+

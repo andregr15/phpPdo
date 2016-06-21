@@ -48,7 +48,13 @@ class AlunoDao
 	
 	public function GetAluno($aluno)
 	{
-		$this->SetStatment("select id, nome, nota from pdo.aluno where id = :id;", $aluno);
+		$sql = "";
+		if($aluno->GetId() != null )
+			$sql = "select id, nome, nota from pdo.aluno where id = :id;";
+		else
+			$sql = "select id, nome, nota from pdo.aluno where nome = :nome limit 1;";
+		
+		$this->SetStatment($sql, $aluno);
 		$this->stmt->execute();
 		return $this->stmt->fetch(\PDO::FETCH_OBJ);
 	}
@@ -65,6 +71,7 @@ class AlunoDao
 			
 			if($aluno->GetNome() != null)
 				$this->stmt->bindValue(":nome", $aluno->GetNome());
+			
 			if($aluno->GetNota() != null)
 				$this->stmt->bindValue(":nota", $aluno->GetNota());
 		}
